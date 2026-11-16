@@ -2,156 +2,569 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Norma Personal TV</title>
-<meta name="description" content="Your own TV channels, made from the video you already love. Pick a channel and it's on, like television.">
-<meta property="og:title" content="Norma Personal TV">
-<meta property="og:description" content="Your own TV channels, made from the video you already love.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://normatv.com/">
-<meta name="theme-color" content="#0B0E0E">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<style>
-  :root {
-    --ground: #0B0E0E; --card: #161B1B; --well: #202727; --hairline: #2A3232;
-    --ink: #F2EFEA; --ink2: #A9A49C; --teal: #7CC4BE; --tealfill: #1F5C59; --cream: #F4F1EC;
-    --live: #E8835A; --gold: #D9B54E;
-    --h1: #2E7A76; --h2: #B8643C; --h3: #A6882C; --h4: #66885D; --h5: #855F88; --h6: #56708F;
-    --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
-  }
-  * { box-sizing: border-box; }
-  html, body { margin: 0; background: var(--ground); color: var(--ink); }
-  body { font: 17px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; -webkit-font-smoothing: antialiased; }
-  a { color: var(--teal); }
-  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
-
-  header { display: flex; align-items: center; justify-content: space-between; padding: 22px 0; }
-  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); }
-  .brand svg { width: 36px; height: 36px; }
-  .brand span { letter-spacing: .14em; font-size: 15px; font-weight: 500; }
-  .pill { font-size: 13px; color: var(--ink2); border: 1px solid var(--hairline); border-radius: 999px; padding: 6px 12px; white-space: nowrap; }
-  .pill i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--live); margin-right: 7px; vertical-align: 1px; }
-
-  .hero { display: grid; grid-template-columns: 1fr 1.15fr; gap: 56px; align-items: center; padding: 48px 0 72px; }
-  h1 { font-size: clamp(38px, 5.4vw, 64px); line-height: 1.04; letter-spacing: -.02em; margin: 0 0 20px; font-weight: 700; }
-  h1 em { font-style: normal; color: var(--teal); }
-  .lede { font-size: 20px; color: var(--ink2); margin: 0 0 28px; max-width: 30ch; }
-  .devices { display: flex; gap: 10px; flex-wrap: wrap; }
-  .device { background: var(--card); border: 1px solid var(--hairline); border-radius: 12px; padding: 10px 14px; font-size: 14px; color: var(--ink2); }
-  .device b { color: var(--ink); font-weight: 600; }
-
-  /* The guide graphic */
-  .tv { background: #050707; border: 10px solid #1b2121; border-radius: 18px; box-shadow: 0 30px 80px -30px rgba(0,0,0,.8); overflow: hidden; }
-  .screen { aspect-ratio: 16 / 10; display: grid; grid-template-rows: 44% 1fr; }
-  .now { position: relative; background: linear-gradient(135deg, #12302e, #0a1a19 60%, #23170f); padding: 18px 20px; display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; }
-  .now .orb { position: absolute; right: -40px; top: -60px; width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #e7c27a, #b0502a 55%, transparent 70%); opacity: .55; }
-  .now .tag { font: 600 11px var(--mono); color: var(--live); letter-spacing: .12em; }
-  .now .title { font-size: clamp(15px, 2vw, 21px); font-weight: 650; margin-top: 4px; }
-  .now .meta { font-size: 12px; color: var(--ink2); }
-  .now .bar { height: 3px; background: rgba(255,255,255,.15); border-radius: 3px; margin-top: 10px; }
-  .now .bar span { display: block; width: 38%; height: 100%; background: var(--live); border-radius: 3px; }
-  .grid { background: var(--ground); padding: 8px 10px 10px; display: grid; gap: 5px; grid-template-rows: auto repeat(4, 1fr); font-size: clamp(9px, 1.15vw, 12px); }
-  .times, .row { display: grid; grid-template-columns: 31% 1fr; gap: 5px; }
-  .times div:last-child { display: grid; grid-template-columns: repeat(3, 1fr); color: var(--ink2); font-family: var(--mono); }
-  .ch { display: flex; align-items: center; gap: 7px; background: var(--card); border-radius: 6px; padding: 0 8px; overflow: hidden; white-space: nowrap; }
-  .num { font: 600 1em var(--mono); color: var(--cream); border-radius: 4px; padding: 1px 5px; }
-  .progs { display: flex; gap: 5px; }
-  .p { background: var(--card); border-radius: 6px; padding: 0 8px; display: flex; align-items: center; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; color: var(--ink2); }
-  .row.on .ch, .row.on .p:first-child { outline: 2px solid var(--teal); outline-offset: -2px; color: var(--ink); }
-
-  section { padding: 72px 0; border-top: 1px solid var(--hairline); }
-  h2 { font-size: clamp(28px, 3.4vw, 40px); letter-spacing: -.015em; margin: 0 0 12px; line-height: 1.12; }
-  .sub { color: var(--ink2); margin: 0 0 40px; max-width: 56ch; }
-  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-  .step { background: var(--card); border: 1px solid var(--hairline); border-radius: 16px; padding: 26px; }
-  .step .n { font: 600 13px var(--mono); color: var(--teal); }
-  .step h3 { margin: 10px 0 8px; font-size: 21px; }
-  .step p { margin: 0; color: var(--ink2); font-size: 16px; }
-  .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
-  .chip { display: flex; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--hairline); border-radius: 999px; padding: 8px 16px 8px 8px; font-size: 15px; }
-  .chip .num { font-size: 13px; }
-
-  footer { border-top: 1px solid var(--hairline); padding: 32px 0 48px; color: var(--ink2); font-size: 14px; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
-
-  @media (max-width: 860px) {
-    .hero { grid-template-columns: 1fr; gap: 40px; padding-top: 24px; }
-    .steps { grid-template-columns: 1fr; }
-    section { padding: 56px 0; }
-  }
-  @media (max-width: 420px) { .pill { display: none; } }
-</style>
+<meta property="og:title" content="Norma Personal TV">
+<meta property="og:description" content="Your own TV network, made from the YouTube videos you love and the photos you have taken.">
+<meta property="og:image" content="https://normatv.com/img/nebula.jpg">
+<meta property="og:url" content="https://normatv.com/">
+<style>body{margin:0}</style>
 </head>
 <body>
+<title>Norma Personal TV</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Your own TV network. Channels made from the YouTube videos you love and the photos you've taken, in a real TV guide on Fire TV, programmed from your iPhone.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: a bright page that frames real TV screens. The screens stay dark like a TV; everything around them is daylight. */
+:root {
+  --page: #FBFCFB;        /* daylight ground with a faint teal bias */
+  --band: #EEF3F2;        /* alternate section band */
+  --card: #FFFFFF;
+  --ink: #111716;
+  --ink2: #4F5B59;
+  --line: #DCE4E2;
+  --teal: #0F3D3D;        /* Norma teal */
+  --teal-ink: #0F3D3D;
+  --on-teal: #F4F2EE;
+  --air: #C2532B;         /* on-air rust */
+  --gold: #8A6D14;
+  /* The TV screens are always dark, in both themes */
+  --scr: #0B1212; --scr-card: #152020; --scr-card2: #1C2A2A; --scr-ink: #F2EFEA; --scr-ink2: #9DA9A6; --scr-line: #263434; --scr-focus: #F4F2EE;
+  --h1: #2E7A76; --h2: #B8643C; --h3: #A6882C; --h4: #66885D; --h5: #855F88; --h6: #56708F;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --page: #0E1312; --band: #131A19; --card: #18201F; --ink: #EEF2F0; --ink2: #A3B0AD; --line: #283332;
+  --teal: #1F5C59; --teal-ink: #7CC4BE; --on-teal: #F4F2EE; --air: #E8835A; --gold: #D9B54E; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --page: #0E1312; --band: #131A19; --card: #18201F; --ink: #EEF2F0; --ink2: #A3B0AD; --line: #283332;
+  --teal: #1F5C59; --teal-ink: #7CC4BE; --on-teal: #F4F2EE; --air: #E8835A; --gold: #D9B54E; color-scheme: dark; }
+
+* { box-sizing: border-box; }
+body { background: var(--page); color: var(--ink); font: 400 17px/1.6 var(--body); -webkit-font-smoothing: antialiased; }
+img { display: block; max-width: 100%; }
+a { color: var(--teal-ink); }
+:focus-visible { outline: 3px solid var(--air); outline-offset: 3px; border-radius: 4px; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; letter-spacing: -0.02em; }
+h2 { font-size: clamp(32px, 4.4vw, 54px); line-height: 1.02; font-weight: 800; }
+h3 { font-size: 22px; line-height: 1.2; font-weight: 700; letter-spacing: -0.01em; }
+p { margin: 0; }
+.eyebrow { font: 700 12px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--air); }
+.lead { font-size: 19px; color: var(--ink2); max-width: 56ch; }
+.mono { font-family: var(--mono); }
+
+/* Nav */
+nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 20px; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); }
+.brand svg { width: 34px; height: 34px; flex: none; }
+.brand b { font: 700 14px var(--body); letter-spacing: .16em; }
+.brand span { font: 500 14px var(--body); letter-spacing: .16em; color: var(--ink2); }
+.navlinks { display: flex; gap: 26px; align-items: center; font-size: 15px; }
+.navlinks a { color: var(--ink2); text-decoration: none; }
+.navlinks a:hover { color: var(--ink); }
+.status { display: inline-flex; align-items: center; gap: 8px; font: 500 13px var(--body); color: var(--ink); border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 7px 13px; white-space: nowrap; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--air); box-shadow: 0 0 0 0 var(--air); animation: pulse 2.4s infinite; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(194,83,43,.5); } 70% { box-shadow: 0 0 0 8px rgba(194,83,43,0); } 100% { box-shadow: 0 0 0 0 rgba(194,83,43,0); } }
+
+/* Hero */
+.hero { padding-block: 40px 88px; display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.25fr); gap: 56px; align-items: center; }
+.hero h1 { font-size: clamp(46px, 6.6vw, 92px); line-height: .94; font-weight: 800; letter-spacing: -0.035em; }
+.hero h1 .tune { color: var(--teal-ink); display: block; }
+.hero .lead { margin-top: 24px; font-size: 20px; }
+.facts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+.fact { display: flex; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; font-size: 15px; }
+.fact svg { width: 20px; height: 20px; color: var(--teal-ink); flex: none; }
+.yt-flow { display: grid; grid-template-columns: minmax(0,1fr) auto minmax(0,1fr); gap: 24px; align-items: center; }
+.yt-col { display: grid; gap: 10px; }
+.yt-src { display: grid; grid-template-columns: 96px 1fr; gap: 12px; align-items: center; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 8px; }
+.yt-src img { width: 96px; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px; }
+.yt-src b { display: block; font-size: 15px; line-height: 1.3; }
+.yt-src span { font-size: 13px; color: var(--ink2); }
+.yt-tag { display: inline-flex; align-items: center; gap: 6px; font: 700 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--air); }
+.yt-tag svg { width: 16px; height: 16px; }
+.yt-to { display: grid; gap: 10px; }
+.yt-ch { display: flex; align-items: center; gap: 12px; background: var(--scr); color: var(--scr-ink); border-radius: 14px; padding: 14px 16px; }
+.yt-ch .n { font: 700 18px var(--mono); color: #fff; border-radius: 8px; padding: 3px 10px; }
+.yt-ch b { display: block; font: 700 18px var(--display); }
+.yt-ch span { font-size: 13px; color: var(--scr-ink2); }
+.yt-arrow { color: var(--air); }
+.yt-arrow svg { width: 44px; height: 44px; }
+@media (max-width: 980px) { .yt-flow { grid-template-columns: minmax(0,1fr); } .yt-arrow { justify-self: center; transform: rotate(90deg); } }
+
+.stage { position: relative; padding-bottom: 56px; }
+.tv { background: #070B0B; border-radius: 20px; padding: 12px; box-shadow: 0 40px 80px -40px rgba(15,61,61,.55), 0 2px 0 rgba(255,255,255,.05) inset; }
+.tv-foot { width: 22%; height: 10px; margin: 0 auto; background: linear-gradient(#1a2222, #0c1111); border-radius: 0 0 10px 10px; }
+.screen { position: relative; aspect-ratio: 16 / 9; border-radius: 10px; overflow: hidden; background: var(--scr); color: var(--scr-ink); }
+.slide { position: absolute; inset: 0; opacity: 0; transition: opacity .9s ease; }
+.slide.on { opacity: 1; }
+.slide img { width: 100%; height: 100%; object-fit: cover; }
+.slide::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(5,10,10,.0) 40%, rgba(5,10,10,.86) 100%); }
+.osd { position: absolute; left: 4%; right: 4%; bottom: 6%; z-index: 2; }
+.osd .row1 { display: flex; align-items: center; gap: 8px; font: 700 clamp(9px, 1.1vw, 12px) var(--body); letter-spacing: .1em; text-transform: uppercase; }
+.live { background: #D9452B; color: #fff; border-radius: 4px; padding: 2px 6px; font-size: .9em; }
+.osd .t { font: 700 clamp(16px, 2.4vw, 30px)/1.1 var(--display); letter-spacing: -0.01em; margin-top: 8px; }
+.osd .m { font-size: clamp(10px, 1.2vw, 14px); color: var(--scr-ink2); margin-top: 4px; }
+.prog { height: 4px; border-radius: 4px; background: rgba(255,255,255,.18); margin-top: 12px; overflow: hidden; }
+.prog i { display: block; height: 100%; width: 40%; background: #F4F2EE; border-radius: 4px; transition: width .9s ease; }
+.chbug { position: absolute; top: 5%; right: 4%; z-index: 2; font: 700 clamp(18px, 3vw, 38px)/1 var(--mono); color: #fff; text-shadow: 0 2px 12px rgba(0,0,0,.5); }
+.chbug small { display: block; font: 600 clamp(8px, 1vw, 11px) var(--body); letter-spacing: .12em; text-align: right; opacity: .85; margin-top: 4px; }
+.mark { position: absolute; top: 5%; left: 4%; z-index: 2; display: flex; align-items: center; gap: 8px; font: 700 clamp(8px, .95vw, 11px) var(--body); letter-spacing: .16em; }
+.mark svg { width: clamp(16px, 2vw, 22px); height: auto; }
+
+.phone { position: absolute; width: 25%; right: -5%; bottom: 0; z-index: 3; aspect-ratio: 9 / 19.5; background: #0A0F0F; border-radius: 34px; padding: 7px; box-shadow: 0 30px 60px -20px rgba(0,0,0,.45); }
+.phone .ps { width: 100%; height: 100%; background: var(--page); border-radius: 28px; overflow: hidden; padding: 16% 8% 8%; display: flex; flex-direction: column; gap: 6px; color: var(--ink); }
+.ps .ph { font: 800 clamp(11px, 1.3vw, 16px) var(--display); }
+.ps .pt { font-size: clamp(7px, .75vw, 9px); color: var(--ink2); margin-bottom: 4px; }
+.pch { display: flex; align-items: center; gap: 6px; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 5px; font-size: clamp(7px, .8vw, 10px); font-weight: 600; transition: border-color .4s, box-shadow .4s; }
+.pch img { width: 30%; aspect-ratio: 16/10; object-fit: cover; border-radius: 4px; }
+.pch .n { font: 700 1em var(--mono); color: #fff; border-radius: 3px; padding: 0 4px; }
+.pch.on { border-color: var(--air); box-shadow: 0 0 0 1px var(--air); }
+.pch em { display: block; font-style: normal; font-weight: 400; color: var(--ink2); font-size: .9em; }
+.remote-hint { position: absolute; left: 0; bottom: 6px; display: flex; gap: 8px; align-items: center; font-size: 14px; color: var(--ink2); }
+.key { display: inline-grid; place-items: center; min-width: 28px; height: 28px; padding: 0 6px; border-radius: 8px; background: var(--card); border: 1px solid var(--line); font: 700 12px var(--mono); color: var(--ink); }
+
+/* Pillars */
+.band { background: var(--band); }
+section { padding-block: 96px; }
+.pillars { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; padding-block: 56px; }
+.pillar { display: grid; gap: 8px; align-content: start; }
+.pillar .ic { width: 44px; height: 44px; border-radius: 12px; background: var(--teal); color: var(--on-teal); display: grid; place-items: center; }
+.pillar .ic svg { width: 22px; height: 22px; }
+.pillar h3 { font-size: 19px; margin-top: 6px; }
+.pillar p { color: var(--ink2); font-size: 15.5px; }
+
+/* Split sections */
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 64px; align-items: center; }
+.split.flip { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); }
+.copy { display: grid; gap: 18px; align-content: start; }
+.points { display: grid; gap: 14px; margin-top: 8px; padding: 0; list-style: none; }
+.points li { display: grid; grid-template-columns: 26px 1fr; gap: 12px; color: var(--ink2); }
+.points li b { color: var(--ink); font-weight: 600; }
+.points svg { width: 22px; height: 22px; color: var(--air); margin-top: 2px; }
+.caption { font-size: 13.5px; color: var(--ink2); margin-top: 14px; }
+
+/* Guide (recreates the Fire TV guide layout) */
+.screen.guide { aspect-ratio: auto; }
+.guide { background: var(--scr); color: var(--scr-ink); padding: 3.2% 3.4%; display: grid; grid-template-rows: auto auto 1fr; gap: 3%; font-size: clamp(7px, 1.02vw, 12.5px); }
+.g-top { display: flex; align-items: center; justify-content: space-between; color: var(--scr-ink2); }
+.g-top .l { display: flex; align-items: center; gap: 1em; }
+.g-top b { color: var(--scr-ink); letter-spacing: .16em; font-weight: 700; }
+.g-top .set { background: var(--scr-card2); color: var(--scr-ink); border-radius: .5em; padding: .45em 1em; font-weight: 600; }
+.g-now { display: grid; grid-template-columns: 34% 1fr; gap: 3%; align-items: center; }
+.g-now .thumb { position: relative; aspect-ratio: 16/9; border-radius: .6em; overflow: hidden; }
+.g-now .thumb img { width: 100%; height: 100%; object-fit: cover; }
+.g-now .thumb .live { position: absolute; top: .6em; left: .6em; font-size: .85em; }
+.g-now .thumb .bar { position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: rgba(255,255,255,.2); }
+.g-now .thumb .bar i { display: block; width: 62%; height: 100%; background: var(--air); }
+.g-now .k { font-weight: 700; letter-spacing: .1em; color: var(--scr-ink2); font-size: .9em; }
+.g-now .t { font: 700 2.1em/1.08 var(--display); margin: .25em 0 .3em; letter-spacing: -0.01em; }
+.g-now .m { color: var(--scr-ink2); }
+.g-now .left { display: inline-block; margin-top: .6em; border: 1px solid #E8835A; color: #F2A27F; border-radius: .35em; padding: .15em .55em; font-weight: 700; font-size: .85em; letter-spacing: .06em; }
+.g-grid { display: grid; grid-template-columns: 18% 1fr; gap: .45em; align-content: start; position: relative; }
+.g-times { display: contents; }
+.g-times .ts { display: grid; grid-template-columns: repeat(4, 1fr); color: var(--scr-ink2); font-family: var(--mono); font-size: .9em; position: relative; }
+.g-ch { background: var(--scr-card); border-radius: .45em; display: flex; align-items: center; gap: .6em; padding: .55em .7em; font-weight: 600; white-space: nowrap; overflow: hidden; }
+.g-ch .n { font: 700 1em var(--mono); color: #fff; border-radius: .3em; padding: .05em .45em; }
+.g-row { display: flex; gap: .45em; position: relative; }
+.g-p { background: var(--scr-card); border-radius: .45em; padding: .45em .7em; overflow: hidden; white-space: nowrap; min-width: 0; }
+.g-p b { display: block; font-weight: 600; overflow: hidden; text-overflow: ellipsis; }
+.g-p span { color: var(--scr-ink2); font-size: .85em; }
+.g-p.past { opacity: .45; }
+.g-p.focus { background: var(--scr-focus); color: #111; }
+.g-p.focus span { color: #4F5B59; }
+.nowline { position: absolute; top: 1.6em; bottom: 0; left: calc(18% + .45em + 18%); width: 2px; background: var(--air); z-index: 2; }
+.nowline::before { content: "NOW 8:12"; position: absolute; top: -1.9em; left: 50%; transform: translateX(-50%); background: var(--air); color: #fff; font: 700 .8em var(--mono); padding: .2em .45em; border-radius: .3em; white-space: nowrap; }
+
+/* Phone (channel editor) */
+.device-pair { position: relative; display: grid; place-items: center; }
+.bigphone { width: min(330px, 86%); aspect-ratio: 9 / 19.5; background: #0A0F0F; border-radius: 48px; padding: 10px; box-shadow: 0 40px 80px -40px rgba(15,61,61,.6); }
+.bigphone .ps { width: 100%; height: 100%; background: var(--page); border-radius: 39px; overflow: hidden; padding: 54px 18px 18px; display: flex; flex-direction: column; gap: 12px; font-size: 13px; }
+.ed-top { display: flex; justify-content: space-between; align-items: center; color: var(--teal-ink); font-weight: 600; font-size: 14px; }
+.ed-title { display: flex; align-items: center; gap: 10px; }
+.ed-title .n { font: 700 18px var(--mono); color: #fff; background: var(--h4); border-radius: 8px; padding: 4px 10px; }
+.ed-title h4 { margin: 0; font: 800 24px var(--display); letter-spacing: -0.01em; }
+.lab { font: 700 10.5px var(--mono); letter-spacing: .12em; color: var(--ink2); text-transform: uppercase; margin-top: 4px; }
+.src { display: flex; gap: 10px; align-items: center; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 8px; }
+.src img { width: 64px; aspect-ratio: 16/10; object-fit: cover; border-radius: 6px; }
+.src b { display: block; font-size: 13px; }
+.src span { color: var(--ink2); font-size: 12px; }
+.seg { display: grid; grid-template-columns: repeat(3, 1fr); background: var(--band); border-radius: 10px; padding: 3px; gap: 3px; }
+.seg span { text-align: center; padding: 7px 0; border-radius: 8px; font-weight: 600; font-size: 12.5px; color: var(--ink2); }
+.seg span.on { background: var(--card); color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+.sendbtn { margin-top: auto; background: var(--teal); color: var(--on-teal); text-align: center; border-radius: 14px; padding: 13px; font-weight: 600; }
+.synced { position: absolute; right: 0; top: 18%; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; display: flex; gap: 10px; align-items: center; font-size: 14px; box-shadow: 0 20px 40px -24px rgba(0,0,0,.35); max-width: 230px; }
+.synced svg { width: 22px; height: 22px; color: var(--teal-ink); flex: none; }
+
+/* Personal media */
+.pm { display: grid; grid-template-columns: minmax(0, .8fr) auto minmax(0, 1.4fr); gap: 28px; align-items: center; margin-top: 48px; }
+.picker { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 14px; box-shadow: 0 30px 60px -40px rgba(0,0,0,.4); }
+.picker .ph { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; color: var(--ink2); margin-bottom: 10px; }
+.picker .ph b { color: var(--ink); font: 700 16px var(--display); }
+.pgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+.pgrid .c { position: relative; aspect-ratio: 1; overflow: hidden; border-radius: 4px; }
+.pgrid .c img { width: 100%; height: 100%; object-fit: cover; }
+.pgrid .c::after { content: ""; position: absolute; right: 5px; bottom: 5px; width: 16px; height: 16px; border-radius: 50%; background: var(--air) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.6 2.5L12 5.5' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain; border: 1.5px solid #fff; }
+.pgrid .c.vid::before { content: "0:42"; position: absolute; left: 5px; bottom: 5px; z-index: 1; color: #fff; font: 700 10px var(--mono); text-shadow: 0 1px 4px rgba(0,0,0,.7); }
+.arrow { color: var(--air); }
+.arrow svg { width: 44px; height: 44px; }
+.rules { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.rule { display: inline-flex; gap: 8px; align-items: center; background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px; font-size: 14px; }
+.rule .mono { color: var(--teal-ink); font-weight: 700; }
+.soon { display: inline-flex; align-items: center; gap: 8px; font: 700 12px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--gold); border: 1px solid currentColor; border-radius: 999px; padding: 5px 11px; width: max-content; }
+.pm-tv .screen .slide { transition: opacity 1.4s ease, transform 8s linear; transform: scale(1.0); }
+.pm-tv .screen .slide.on { transform: scale(1.06); }
+
+/* Closing */
+.close { background: var(--teal); color: var(--on-teal); border-radius: 28px; padding: 72px 56px; display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 40px; align-items: end; }
+.close h2 { color: var(--on-teal); font-size: clamp(36px, 5vw, 64px); }
+.close p { color: rgba(244,242,238,.78); font-size: 18px; }
+.close .chs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.close .chs span { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); border-radius: 999px; padding: 6px 12px 6px 6px; font-size: 14px; }
+.close .chs i { font: 700 12px var(--mono); font-style: normal; color: #fff; border-radius: 6px; padding: 2px 7px; }
+
+footer { padding-block: 40px 56px; color: var(--ink2); font-size: 13px; display: grid; gap: 14px; }
+footer .top { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 14px; }
+footer .credits { line-height: 1.7; }
+footer .credits a { color: var(--ink2); }
+
+@media (max-width: 980px) {
+  .navlinks a { display: none; }
+  .hero { grid-template-columns: minmax(0, 1fr); gap: 48px; padding-block: 16px 64px; }
+  .phone { right: 0; width: 28%; }
+  .stage { padding-right: 10%; }
+  .split, .split.flip { grid-template-columns: minmax(0, 1fr); gap: 44px; }
+  .split.flip .copy { order: -1; }
+  .pillars { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+  .pm { grid-template-columns: minmax(0, 1fr); }
+  .arrow { justify-self: center; transform: rotate(90deg); }
+  .close { grid-template-columns: minmax(0, 1fr); padding: 48px 28px; }
+  section { padding-block: 72px; }
+}
+@media (max-width: 560px) {
+  .pillars { grid-template-columns: minmax(0, 1fr); }
+  .stage { padding-right: 0; padding-bottom: 0; }
+  .phone { display: none; }
+  .remote-hint { position: static; margin-top: 14px; }
+  .synced { position: static; margin-top: 18px; }
+  .device-pair { gap: 0; }
+  .g-now { grid-template-columns: 40% 1fr; }
+  .brand span { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .slide, .prog i, .pm-tv .screen .slide { transition: none; transform: none !important; }
+  .dot { animation: none; }
+}
+</style>
+
 <div class="wrap">
-  <header>
-    <a class="brand" href="/" aria-label="Norma Personal TV home">
-      <svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="8" fill="#F4F1EC"/><path d="M13 8.5 V27.5 H24.5 Z" fill="none" stroke="#0F3D3D" stroke-width="2.2" stroke-linejoin="round"/></svg>
-      <span>NORMA PERSONAL TV</span>
+  <nav>
+    <a class="brand" href="#top" aria-label="Norma Personal TV">
+      <svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="8" fill="#0F3D3D"/><path d="M13 8.5V27.5H24.5Z" fill="none" stroke="#F4F2EE" stroke-width="2.2" stroke-linejoin="round"/></svg>
+      <b>NORMA</b><span>PERSONAL TV</span>
     </a>
-    <div class="pill"><i></i>In private testing</div>
-  </header>
+    <div class="navlinks">
+      <a href="#youtube">YouTube</a>
+      <a href="#guide">The guide</a>
+      <a href="#iphone">iPhone</a>
+      <a href="#photos">Your photos</a>
+      <span class="status"><span class="dot"></span>In private testing</span>
+    </div>
+  </nav>
 
-  <main>
-    <div class="hero">
-      <div>
-        <h1>Your own TV channels. <em>Always on.</em></h1>
-        <p class="lede">Turn the video you already love into channels that just play, like television. Pick a channel and drop into whatever's on.</p>
-        <div class="devices">
-          <div class="device"><b>iPhone</b> to make channels</div>
-          <div class="device"><b>Fire TV</b> to watch them</div>
-        </div>
-      </div>
-
-      <div class="tv" role="img" aria-label="A TV guide showing personal channels such as Space and Science, Golf and Classic Films">
-        <div class="screen">
-          <div class="now">
-            <div class="orb"></div>
-            <div class="tag">ON NOW · CH 1</div>
-            <div class="title">The Inner Planets, Part 2</div>
-            <div class="meta">Space &amp; Science · until 8:40</div>
-            <div class="bar"><span></span></div>
-          </div>
-          <div class="grid">
-            <div class="times"><div></div><div><span>8:00</span><span>8:30</span><span>9:00</span></div></div>
-            <div class="row on"><div class="ch"><span class="num" style="background:var(--h1)">1</span>Space &amp; Science</div><div class="progs"><div class="p" style="flex:1.4">The Inner Planets</div><div class="p" style="flex:1.6">How Stars Die</div></div></div>
-            <div class="row"><div class="ch"><span class="num" style="background:var(--h2)">2</span>Golf</div><div class="progs"><div class="p" style="flex:1">Links Classics</div><div class="p" style="flex:2">Final Round Rewind</div></div></div>
-            <div class="row"><div class="ch"><span class="num" style="background:var(--h3)">3</span>Classic Films</div><div class="progs"><div class="p" style="flex:3">Feature presentation</div></div></div>
-            <div class="row"><div class="ch"><span class="num" style="background:var(--h5)">4</span>Cooking</div><div class="progs"><div class="p" style="flex:1.1">Bread at Home</div><div class="p" style="flex:.9">Knife Skills</div><div class="p" style="flex:1">Sunday Roast</div></div></div>
-          </div>
-        </div>
+  <header class="hero" id="top">
+    <div>
+      <h1>Your own TV network. <span class="tune">Always on.</span></h1>
+      <p class="lead">Turn the YouTube videos and playlists you love, and the photos you've taken, into real TV channels. Set them up on your iPhone, then turn on the TV, pick a channel and drop into whatever's playing.</p>
+      <div class="facts">
+        <div class="fact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M10 8.5v7l5.5-3.5z"/></svg>Plays YouTube in its official player</div>
+        <div class="fact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>Fire TV app with a full guide</div>
+        <div class="fact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg>iPhone app to build channels</div>
       </div>
     </div>
 
-    <section>
-      <h2>Lean back. It's already on.</h2>
-      <p class="sub">No feeds, no endless scrolling, no deciding what's next every ten minutes. You set up the channels once and they run on their own.</p>
-      <div class="steps">
-        <div class="step"><div class="n">01</div><h3>Make a channel</h3><p>On your iPhone, add the videos and creators you like, give the channel a name and number, and choose how it plays.</p></div>
-        <div class="step"><div class="n">02</div><h3>It becomes a schedule</h3><p>Norma turns each channel into a continuous programme lineup, so there's always something on.</p></div>
-        <div class="step"><div class="n">03</div><h3>Watch on your TV</h3><p>Open the guide on Fire TV, pick a channel and flip between them with the remote, just like cable.</p></div>
+    <div class="stage" aria-label="A TV playing a Norma channel, with the iPhone app beside it">
+      <div class="tv">
+        <div class="screen" id="heroScreen">
+          <div class="slide on"><img src="img/nebula.jpg" alt="Programme still: the Tarantula Nebula"></div>
+          <div class="slide"><img src="img/dhole.jpg" alt="Programme still: a wild dog in tall grass"></div>
+          <div class="slide"><img src="img/bridge.jpg" alt="Programme still: the Golden Gate Bridge at dusk"></div>
+          <div class="slide"><img src="img/buns.jpg" alt="Programme still: a basket of cardamom buns"></div>
+          <div class="slide"><img src="img/hug.jpg" alt="A family photo: a girl hugging her dog"></div>
+          <div class="mark"><svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="8" fill="#F4F2EE"/><path d="M13 8.5V27.5H24.5Z" fill="none" stroke="#0F3D3D" stroke-width="2.4" stroke-linejoin="round"/></svg>NORMA</div>
+          <div class="chbug"><span id="hChNum">1</span><small id="hChName">SPACE</small></div>
+          <div class="osd">
+            <div class="row1"><span class="live">LIVE</span><span id="hKicker">CH 1 · Space &amp; Science</span></div>
+            <div class="t" id="hTitle">Inside the Tarantula Nebula</div>
+            <div class="m" id="hMeta">8:00 – 8:52 PM · Up next: How Stars Die</div>
+            <div class="prog"><i id="hProg"></i></div>
+          </div>
+        </div>
       </div>
-    </section>
+      <div class="tv-foot"></div>
 
-    <section>
-      <h2>A network that's all yours.</h2>
-      <p class="sub">Whatever you're into, give it its own channel.</p>
-      <div class="chips">
-        <div class="chip"><span class="num" style="background:var(--h1)">1</span>Space &amp; Science</div>
-        <div class="chip"><span class="num" style="background:var(--h2)">2</span>Golf</div>
-        <div class="chip"><span class="num" style="background:var(--h3)">3</span>Classic Films</div>
-        <div class="chip"><span class="num" style="background:var(--h4)">4</span>Nature</div>
-        <div class="chip"><span class="num" style="background:var(--h5)">5</span>Cooking</div>
-        <div class="chip"><span class="num" style="background:var(--h6)">6</span>History</div>
-        <div class="chip"><span class="num" style="background:var(--h1)">7</span>Late-Night Comedy</div>
-        <div class="chip"><span class="num" style="background:var(--h2)">8</span>True Crime</div>
+      <div class="phone" aria-hidden="true">
+        <div class="ps">
+          <div class="ph">Your channels</div>
+          <div class="pt">Living Room TV · connected</div>
+          <div class="pch on" data-i="0"><img src="img/nebula.jpg" alt=""><span><span class="n" style="background:var(--h1)">1</span> Space<em>Now: Tarantula Nebula</em></span></div>
+          <div class="pch" data-i="1"><img src="img/dhole.jpg" alt=""><span><span class="n" style="background:var(--h4)">2</span> Wildlife<em>Now: Into the Grassland</em></span></div>
+          <div class="pch" data-i="2"><img src="img/bridge.jpg" alt=""><span><span class="n" style="background:var(--h6)">3</span> Travel<em>Now: Pacific Coast</em></span></div>
+          <div class="pch" data-i="3"><img src="img/buns.jpg" alt=""><span><span class="n" style="background:var(--h2)">4</span> Cooking<em>Now: Sunday Baking</em></span></div>
+          <div class="pch" data-i="4"><img src="img/hug.jpg" alt=""><span><span class="n" style="background:var(--h5)">7</span> The Dogs<em>Your photos</em></span></div>
+        </div>
       </div>
-    </section>
-  </main>
+      <div class="remote-hint"><span class="key">▲</span><span class="key">▼</span> Flip channels with the remote</div>
+    </div>
+  </header>
+</div>
+
+<div class="band">
+  <div class="wrap pillars">
+    <div class="pillar">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 10v10M15 10v10"/></svg></div>
+      <h3>A real TV guide</h3>
+      <p>Every channel on a time grid, with what's on now and what's next. Always full, day and night.</p>
+    </div>
+    <div class="pillar">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5l5 5H7zM12 19l-5-5h10z"/></svg></div>
+      <h3>Channel up, channel down</h3>
+      <p>No feeds and no deciding every ten minutes. Programmes play back to back on a schedule.</p>
+    </div>
+    <div class="pillar">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg></div>
+      <h3>Programmed from your iPhone</h3>
+      <p>Pick what goes on each channel and how it plays. Your TV updates by itself.</p>
+    </div>
+    <div class="pillar">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg></div>
+      <h3>Your photos, on air</h3>
+      <p>Coming next: channels made from your own photos and videos, looping on the big screen.</p>
+    </div>
+  </div>
+</div>
+
+<section id="youtube">
+  <div class="wrap">
+    <div class="split" style="align-items:start">
+      <div class="copy">
+        <span class="eyebrow">Works with YouTube</span>
+        <h2>All of YouTube, programmed like TV.</h2>
+        <p class="lead">Documentaries, interviews, lectures, full concerts and shows: YouTube already has years of great long-form video. Norma turns the playlists and videos you choose into channels that run on their own.</p>
+      </div>
+      <ul class="points" style="margin-top:44px">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><b>Add YouTube playlists and videos.</b> Mix a few favourites or a whole series into one channel.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><b>Plays in YouTube's official player.</b> Nothing is downloaded or copied, and creators get the views.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><b>YouTube's own controls when you want them.</b> Captions and player controls come straight from YouTube.</span></li>
+      </ul>
+    </div>
+    <div class="yt-flow" style="margin-top:48px" aria-label="YouTube playlists becoming Norma channels">
+      <div class="yt-col">
+        <div class="yt-src"><img src="img/nebula.jpg" alt=""><div><span class="yt-tag">YouTube playlist</span><b>Deep Space, Explained</b><span>22 videos</span></div></div>
+        <div class="yt-src"><img src="img/dhole.jpg" alt=""><div><span class="yt-tag">YouTube playlist</span><b>Hunters of the Grassland</b><span>14 videos</span></div></div>
+        <div class="yt-src"><img src="img/bridge.jpg" alt=""><div><span class="yt-tag">YouTube video</span><b>Pacific Coast Highway, Full Trip</b><span>1 h 12 min</span></div></div>
+      </div>
+      <div class="yt-arrow" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 24h30M28 14l10 10-10 10"/></svg></div>
+      <div class="yt-to">
+        <div class="yt-ch"><span class="n" style="background:var(--h1)">1</span><div><b>Space</b><span>On now · Inside the Tarantula Nebula</span></div></div>
+        <div class="yt-ch"><span class="n" style="background:var(--h4)">2</span><div><b>Wildlife</b><span>On now · Into the Grassland</span></div></div>
+        <div class="yt-ch"><span class="n" style="background:var(--h6)">3</span><div><b>Travel</b><span>On now · Pacific Coast Highway</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="guide" class="band">
+  <div class="wrap split flip">
+    <div>
+      <div class="tv">
+        <div class="screen guide" role="img" aria-label="The Norma guide on Fire TV with six channels on a time grid">
+          <div class="g-top">
+            <div class="l"><b>NORMA</b> PERSONAL TV <span>· Your channels · Living Room TV</span></div>
+            <div class="l"><span class="mono">8:12 PM</span><span class="set">Settings</span></div>
+          </div>
+          <div class="g-now">
+            <div class="thumb"><img src="img/dhole.jpg" alt=""><span class="live">LIVE · CH 2</span><div class="bar"><i></i></div></div>
+            <div>
+              <div class="k">2 · WILDLIFE</div>
+              <div class="t">Into the Grassland: Hunters of the Western Ghats</div>
+              <div class="m">7:40 – 8:32 PM · 52 min</div>
+              <div class="left">LIVE NOW · 20 MIN LEFT</div>
+            </div>
+          </div>
+          <div class="g-grid">
+            <div></div>
+            <div class="g-times"><div class="ts"><span>7:30</span><span>8:00</span><span>8:30</span><span>9:00</span></div></div>
+            <div class="g-ch"><span class="n" style="background:var(--h1)">1</span>Space</div>
+            <div class="g-row"><div class="g-p past" style="flex:1"><b>Moons of Jupiter</b><span>Aired</span></div><div class="g-p" style="flex:2.1"><b>Inside the Tarantula Nebula</b><span>8:00 – 8:52</span></div><div class="g-p" style="flex:.9"><b>How Stars Die</b><span>8:52</span></div></div>
+            <div class="g-ch"><span class="n" style="background:var(--h4)">2</span>Wildlife</div>
+            <div class="g-row"><div class="g-p focus" style="flex:2.1"><b>Into the Grassland</b><span>On now · 20 min left</span></div><div class="g-p" style="flex:1.9"><b>River Otters</b><span>8:32 – 9:20</span></div></div>
+            <div class="g-ch"><span class="n" style="background:var(--h6)">3</span>Travel</div>
+            <div class="g-row"><div class="g-p" style="flex:1.6"><b>Pacific Coast Highway</b><span>7:30 – 8:20</span></div><div class="g-p" style="flex:2.4"><b>48 Hours in Lisbon</b><span>8:20 – 9:30</span></div></div>
+            <div class="g-ch"><span class="n" style="background:var(--h2)">4</span>Cooking</div>
+            <div class="g-row"><div class="g-p" style="flex:1.2"><b>Sunday Baking</b><span>7:30</span></div><div class="g-p" style="flex:1"><b>Knife Skills</b><span>8:05</span></div><div class="g-p" style="flex:1.8"><b>One-Pot Dinners</b><span>8:35 – 9:30</span></div></div>
+            <div class="g-ch"><span class="n" style="background:var(--h3)">5</span>Concerts</div>
+            <div class="g-row"><div class="g-p" style="flex:4"><b>Live from the Concert Hall</b><span>7:30 – 9:45</span></div></div>
+            <div class="g-ch"><span class="n" style="background:var(--h5)">7</span>The Dogs</div>
+            <div class="g-row"><div class="g-p" style="flex:4"><b>Summer, on repeat</b><span>Your photos · loops all day</span></div></div>
+            <div class="nowline" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+      <div class="tv-foot"></div>
+      <p class="caption">The Fire TV guide's real layout, filled in with example channels.</p>
+    </div>
+    <div class="copy">
+      <span class="eyebrow">On your TV</span>
+      <h2>It's already on.</h2>
+      <p class="lead">Norma turns every channel into a continuous schedule, so there's always something playing. Open the guide, see what's on across your channels, and jump in partway through, like cable.</p>
+      <ul class="points">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><b>Works from the remote alone.</b> Pick a channel with OK, flip with up and down, and go back to the guide any time.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><b>Now Playing and Up Next.</b> See how far in you are, what comes after, and when.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><b>Captions when you want them.</b> Open Player controls to use YouTube's own CC button.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="iphone">
+  <div class="wrap split">
+    <div class="copy">
+      <span class="eyebrow">On your iPhone</span>
+      <h2>Programme a channel in a minute.</h2>
+      <p class="lead">Give it a name and a number, add the YouTube videos and playlists you want, and choose how it plays. Each channel is yours to shape.</p>
+      <ul class="points">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><b>Newest first, shuffled or in order.</b> A news channel stays fresh, a series plays from episode one.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><b>Pair a TV with a code.</b> Your channels appear in its guide and stay in sync.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><b>Tune from your phone.</b> Tap a channel and the TV switches to it.</span></li>
+      </ul>
+    </div>
+    <div class="device-pair">
+      <div class="bigphone" aria-label="The iPhone channel editor">
+        <div class="ps">
+          <div class="ed-top"><span>‹ Channels</span><span>Done</span></div>
+          <div class="ed-title"><span class="n">2</span><h4>Wildlife</h4></div>
+          <div class="lab">On this channel</div>
+          <div class="src"><img src="img/dhole.jpg" alt=""><div><b>Hunters of the Grassland</b><span>YouTube playlist · 14 videos</span></div></div>
+          <div class="src"><img src="img/swim.jpg" alt=""><div><b>River Life</b><span>YouTube playlist · 9 videos</span></div></div>
+          <div class="src"><img src="img/dogs.jpg" alt=""><div><b>Alpine Year</b><span>YouTube video · 48 min</span></div></div>
+          <div class="lab">Order</div>
+          <div class="seg"><span>Newest</span><span class="on">Shuffle</span><span>In order</span></div>
+          <div class="sendbtn">Tune Living Room TV</div>
+        </div>
+      </div>
+      <div class="synced"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg><span><b>Living Room TV</b><br>Guide updated</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="photos">
+  <div class="wrap">
+    <div class="copy" style="max-width: 760px">
+      <span class="soon">In development</span>
+      <h2>Your life, on channel 7.</h2>
+      <p class="lead">Pick photos and videos from your iPhone and Norma turns them into a channel of their own. Set how long each photo stays up, shuffle or keep the order, and let it loop on the TV all day. It's kept private to your account.</p>
+    </div>
+    <div class="pm">
+      <div class="picker" aria-label="Choosing photos on iPhone">
+        <div class="ph"><b>Summer 2026</b><span>10 photos · 1 video</span></div>
+        <div class="pgrid">
+          <div class="c"><img src="img/hug.jpg" alt=""></div>
+          <div class="c"><img src="img/beach.jpg" alt=""></div>
+          <div class="c vid"><img src="img/swim.jpg" alt=""></div>
+          <div class="c"><img src="img/samoyed.jpg" alt=""></div>
+          <div class="c"><img src="img/dogs.jpg" alt=""></div>
+          <div class="c"><img src="img/buns.jpg" alt=""></div>
+        </div>
+      </div>
+      <div class="arrow" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 24h30M28 14l10 10-10 10"/></svg></div>
+      <div class="pm-tv">
+        <div class="tv">
+          <div class="screen" id="pmScreen">
+            <div class="slide on"><img src="img/hug.jpg" alt="Family photo: a girl hugging her dog" style="object-position: 50% 30%"></div>
+            <div class="slide"><img src="img/beach.jpg" alt="Family photo: an evening beach"></div>
+            <div class="slide"><img src="img/samoyed.jpg" alt="Family photo: a white dog on the lawn"></div>
+            <div class="slide"><img src="img/swim.jpg" alt="Family video still: a dog swimming"></div>
+            <div class="slide"><img src="img/dogs.jpg" alt="Family photo: dogs in the mountains"></div>
+            <div class="chbug">7<small>THE DOGS</small></div>
+          </div>
+        </div>
+        <div class="tv-foot"></div>
+        <div class="rules"><span class="rule">Each photo <span class="mono">8 s</span></span><span class="rule">Order <span class="mono">Shuffle</span></span><span class="rule">Loops <span class="mono">all day</span></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="close">
+    <div>
+      <h2>Television, programmed by you.</h2>
+      <div class="chs">
+        <span><i style="background:var(--h1)">1</i>Space</span>
+        <span><i style="background:var(--h4)">2</i>Wildlife</span>
+        <span><i style="background:var(--h6)">3</i>Travel</span>
+        <span><i style="background:var(--h2)">4</i>Cooking</span>
+        <span><i style="background:var(--h3)">5</i>Concerts</span>
+        <span><i style="background:var(--h5)">7</i>The Dogs</span>
+      </div>
+    </div>
+    <p>Norma Personal TV is in private testing on Amazon Fire TV and iPhone.</p>
+  </div>
 
   <footer>
-    <div>© 2026 Norma Personal TV</div>
-    <div>Videos play through their creators' platforms. Norma Personal TV is not affiliated with YouTube or Amazon.</div>
+    <div class="top"><span>© 2026 Norma Personal TV</span><span>Not affiliated with or endorsed by YouTube or Amazon. YouTube is a trademark of Google LLC. Channel and programme names on this page are examples.</span></div>
+    <div class="credits">Photos from Wikimedia Commons:
+      <a href="https://commons.wikimedia.org/wiki/File:A_New_View_of_the_Tarantula_Nebula.jpg">Tarantula Nebula</a>, NASA (public domain);
+      <a href="https://commons.wikimedia.org/wiki/File:Dhole(Asiatic_wild_dog).jpg">Dhole</a>, Davidvraju (CC BY-SA 4.0);
+      <a href="https://commons.wikimedia.org/wiki/File:Golden_Gate_Bridge_as_seen_from_Marshall%E2%80%99s_Beach,_March_2018.jpg">Golden Gate Bridge</a>, Frank Schulenburg (CC BY-SA 4.0);
+      <a href="https://commons.wikimedia.org/wiki/File:Cardamom_buns.jpg">Cardamom buns</a>, W.carter (CC0);
+      <a href="https://commons.wikimedia.org/wiki/File:Human%E2%80%93canine_friendship_-_girl_hugging_her_dog_tightly_at_golden_hour_in_Laos.jpg">Girl hugging her dog</a>, Basile Morin (CC BY-SA 4.0);
+      <a href="https://commons.wikimedia.org/wiki/File:Liver_yellow_dog_in_the_water_looking_at_viewer_at_golden_hour_in_Don_Det_Laos.jpg">Dog in the water</a>, Basile Morin (CC BY-SA 4.0);
+      <a href="https://commons.wikimedia.org/wiki/File:Samoyed_dog_two_year_old_female_dllu.jpg">Samoyed</a>, Dllu (CC BY-SA 4.0);
+      <a href="https://commons.wikimedia.org/wiki/File:Mixed-breed_dogs_in_Serles.jpg">Dogs in Serles</a>, Wilfredor (CC0);
+      <a href="https://commons.wikimedia.org/wiki/File:Parasols,_Evening,_Beach,_Rincon_de_la_Victoria,_Andalusia,_Spain.jpg">Evening beach</a>, Jebulon (CC0).
+    </div>
   </footer>
 </div>
+
+<script>
+(function () {
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var chans = [
+    { n: '1', name: 'SPACE', k: 'CH 1 · Space &amp; Science', t: 'Inside the Tarantula Nebula', m: '8:00 – 8:52 PM · Up next: How Stars Die', p: 24 },
+    { n: '2', name: 'WILDLIFE', k: 'CH 2 · Wildlife', t: 'Into the Grassland', m: '7:40 – 8:32 PM · Up next: River Otters', p: 62 },
+    { n: '3', name: 'TRAVEL', k: 'CH 3 · Travel', t: 'Pacific Coast Highway', m: '7:30 – 8:20 PM · Up next: 48 Hours in Lisbon', p: 84 },
+    { n: '4', name: 'COOKING', k: 'CH 4 · Cooking', t: 'Sunday Baking', m: '7:30 – 8:05 PM · Up next: Knife Skills', p: 91 },
+    { n: '7', name: 'THE DOGS', k: 'CH 7 · Your photos', t: 'Summer, on repeat', m: '10 photos and 1 video · loops all day', p: 40 }
+  ];
+  var hs = document.querySelectorAll('#heroScreen .slide');
+  var pc = document.querySelectorAll('.phone .pch');
+  var i = 0;
+  function show(j) {
+    var c = chans[j];
+    hs.forEach(function (s, x) { s.classList.toggle('on', x === j); });
+    pc.forEach(function (s, x) { s.classList.toggle('on', x === j); });
+    document.getElementById('hChNum').textContent = c.n;
+    document.getElementById('hChName').textContent = c.name;
+    document.getElementById('hKicker').innerHTML = c.k;
+    document.getElementById('hTitle').textContent = c.t;
+    document.getElementById('hMeta').textContent = c.m;
+    document.getElementById('hProg').style.width = c.p + '%';
+  }
+  show(0);
+  var ps = document.querySelectorAll('#pmScreen .slide');
+  var k = 0;
+  if (!reduce) {
+    setInterval(function () { i = (i + 1) % chans.length; show(i); }, 3800);
+    setInterval(function () { ps[k].classList.remove('on'); k = (k + 1) % ps.length; ps[k].classList.add('on'); }, 3200);
+  }
+})();
+</script>
 </body>
 </html>
