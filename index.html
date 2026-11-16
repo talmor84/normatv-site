@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Norma Personal TV</title>
+<meta name="description" content="Your own TV channels, made from the video you already love. Pick a channel and it's on, like television.">
+<meta property="og:title" content="Norma Personal TV">
+<meta property="og:description" content="Your own TV channels, made from the video you already love.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://normatv.com/">
+<meta name="theme-color" content="#0B0E0E">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<style>
+  :root {
+    --ground: #0B0E0E; --card: #161B1B; --well: #202727; --hairline: #2A3232;
+    --ink: #F2EFEA; --ink2: #A9A49C; --teal: #7CC4BE; --tealfill: #1F5C59; --cream: #F4F1EC;
+    --live: #E8835A; --gold: #D9B54E;
+    --h1: #2E7A76; --h2: #B8643C; --h3: #A6882C; --h4: #66885D; --h5: #855F88; --h6: #56708F;
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--ground); color: var(--ink); }
+  body { font: 17px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: var(--teal); }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+
+  header { display: flex; align-items: center; justify-content: space-between; padding: 22px 0; }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); }
+  .brand svg { width: 36px; height: 36px; }
+  .brand span { letter-spacing: .14em; font-size: 15px; font-weight: 500; }
+  .pill { font-size: 13px; color: var(--ink2); border: 1px solid var(--hairline); border-radius: 999px; padding: 6px 12px; white-space: nowrap; }
+  .pill i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--live); margin-right: 7px; vertical-align: 1px; }
+
+  .hero { display: grid; grid-template-columns: 1fr 1.15fr; gap: 56px; align-items: center; padding: 48px 0 72px; }
+  h1 { font-size: clamp(38px, 5.4vw, 64px); line-height: 1.04; letter-spacing: -.02em; margin: 0 0 20px; font-weight: 700; }
+  h1 em { font-style: normal; color: var(--teal); }
+  .lede { font-size: 20px; color: var(--ink2); margin: 0 0 28px; max-width: 30ch; }
+  .devices { display: flex; gap: 10px; flex-wrap: wrap; }
+  .device { background: var(--card); border: 1px solid var(--hairline); border-radius: 12px; padding: 10px 14px; font-size: 14px; color: var(--ink2); }
+  .device b { color: var(--ink); font-weight: 600; }
+
+  /* The guide graphic */
+  .tv { background: #050707; border: 10px solid #1b2121; border-radius: 18px; box-shadow: 0 30px 80px -30px rgba(0,0,0,.8); overflow: hidden; }
+  .screen { aspect-ratio: 16 / 10; display: grid; grid-template-rows: 44% 1fr; }
+  .now { position: relative; background: linear-gradient(135deg, #12302e, #0a1a19 60%, #23170f); padding: 18px 20px; display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; }
+  .now .orb { position: absolute; right: -40px; top: -60px; width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #e7c27a, #b0502a 55%, transparent 70%); opacity: .55; }
+  .now .tag { font: 600 11px var(--mono); color: var(--live); letter-spacing: .12em; }
+  .now .title { font-size: clamp(15px, 2vw, 21px); font-weight: 650; margin-top: 4px; }
+  .now .meta { font-size: 12px; color: var(--ink2); }
+  .now .bar { height: 3px; background: rgba(255,255,255,.15); border-radius: 3px; margin-top: 10px; }
+  .now .bar span { display: block; width: 38%; height: 100%; background: var(--live); border-radius: 3px; }
+  .grid { background: var(--ground); padding: 8px 10px 10px; display: grid; gap: 5px; grid-template-rows: auto repeat(4, 1fr); font-size: clamp(9px, 1.15vw, 12px); }
+  .times, .row { display: grid; grid-template-columns: 31% 1fr; gap: 5px; }
+  .times div:last-child { display: grid; grid-template-columns: repeat(3, 1fr); color: var(--ink2); font-family: var(--mono); }
+  .ch { display: flex; align-items: center; gap: 7px; background: var(--card); border-radius: 6px; padding: 0 8px; overflow: hidden; white-space: nowrap; }
+  .num { font: 600 1em var(--mono); color: var(--cream); border-radius: 4px; padding: 1px 5px; }
+  .progs { display: flex; gap: 5px; }
+  .p { background: var(--card); border-radius: 6px; padding: 0 8px; display: flex; align-items: center; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; color: var(--ink2); }
+  .row.on .ch, .row.on .p:first-child { outline: 2px solid var(--teal); outline-offset: -2px; color: var(--ink); }
+
+  section { padding: 72px 0; border-top: 1px solid var(--hairline); }
+  h2 { font-size: clamp(28px, 3.4vw, 40px); letter-spacing: -.015em; margin: 0 0 12px; line-height: 1.12; }
+  .sub { color: var(--ink2); margin: 0 0 40px; max-width: 56ch; }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .step { background: var(--card); border: 1px solid var(--hairline); border-radius: 16px; padding: 26px; }
+  .step .n { font: 600 13px var(--mono); color: var(--teal); }
+  .step h3 { margin: 10px 0 8px; font-size: 21px; }
+  .step p { margin: 0; color: var(--ink2); font-size: 16px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+  .chip { display: flex; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--hairline); border-radius: 999px; padding: 8px 16px 8px 8px; font-size: 15px; }
+  .chip .num { font-size: 13px; }
+
+  footer { border-top: 1px solid var(--hairline); padding: 32px 0 48px; color: var(--ink2); font-size: 14px; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; gap: 40px; padding-top: 24px; }
+    .steps { grid-template-columns: 1fr; }
+    section { padding: 56px 0; }
+  }
+  @media (max-width: 420px) { .pill { display: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="brand" href="/" aria-label="Norma Personal TV home">
+      <svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="8" fill="#F4F1EC"/><path d="M13 8.5 V27.5 H24.5 Z" fill="none" stroke="#0F3D3D" stroke-width="2.2" stroke-linejoin="round"/></svg>
+      <span>NORMA PERSONAL TV</span>
+    </a>
+    <div class="pill"><i></i>In private testing</div>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div>
+        <h1>Your own TV channels. <em>Always on.</em></h1>
+        <p class="lede">Turn the video you already love into channels that just play, like television. Pick a channel and drop into whatever's on.</p>
+        <div class="devices">
+          <div class="device"><b>iPhone</b> to make channels</div>
+          <div class="device"><b>Fire TV</b> to watch them</div>
+        </div>
+      </div>
+
+      <div class="tv" role="img" aria-label="A TV guide showing personal channels such as Space and Science, Golf and Classic Films">
+        <div class="screen">
+          <div class="now">
+            <div class="orb"></div>
+            <div class="tag">ON NOW · CH 1</div>
+            <div class="title">The Inner Planets, Part 2</div>
+            <div class="meta">Space &amp; Science · until 8:40</div>
+            <div class="bar"><span></span></div>
+          </div>
+          <div class="grid">
+            <div class="times"><div></div><div><span>8:00</span><span>8:30</span><span>9:00</span></div></div>
+            <div class="row on"><div class="ch"><span class="num" style="background:var(--h1)">1</span>Space &amp; Science</div><div class="progs"><div class="p" style="flex:1.4">The Inner Planets</div><div class="p" style="flex:1.6">How Stars Die</div></div></div>
+            <div class="row"><div class="ch"><span class="num" style="background:var(--h2)">2</span>Golf</div><div class="progs"><div class="p" style="flex:1">Links Classics</div><div class="p" style="flex:2">Final Round Rewind</div></div></div>
+            <div class="row"><div class="ch"><span class="num" style="background:var(--h3)">3</span>Classic Films</div><div class="progs"><div class="p" style="flex:3">Feature presentation</div></div></div>
+            <div class="row"><div class="ch"><span class="num" style="background:var(--h5)">4</span>Cooking</div><div class="progs"><div class="p" style="flex:1.1">Bread at Home</div><div class="p" style="flex:.9">Knife Skills</div><div class="p" style="flex:1">Sunday Roast</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section>
+      <h2>Lean back. It's already on.</h2>
+      <p class="sub">No feeds, no endless scrolling, no deciding what's next every ten minutes. You set up the channels once and they run on their own.</p>
+      <div class="steps">
+        <div class="step"><div class="n">01</div><h3>Make a channel</h3><p>On your iPhone, add the videos and creators you like, give the channel a name and number, and choose how it plays.</p></div>
+        <div class="step"><div class="n">02</div><h3>It becomes a schedule</h3><p>Norma turns each channel into a continuous programme lineup, so there's always something on.</p></div>
+        <div class="step"><div class="n">03</div><h3>Watch on your TV</h3><p>Open the guide on Fire TV, pick a channel and flip between them with the remote, just like cable.</p></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>A network that's all yours.</h2>
+      <p class="sub">Whatever you're into, give it its own channel.</p>
+      <div class="chips">
+        <div class="chip"><span class="num" style="background:var(--h1)">1</span>Space &amp; Science</div>
+        <div class="chip"><span class="num" style="background:var(--h2)">2</span>Golf</div>
+        <div class="chip"><span class="num" style="background:var(--h3)">3</span>Classic Films</div>
+        <div class="chip"><span class="num" style="background:var(--h4)">4</span>Nature</div>
+        <div class="chip"><span class="num" style="background:var(--h5)">5</span>Cooking</div>
+        <div class="chip"><span class="num" style="background:var(--h6)">6</span>History</div>
+        <div class="chip"><span class="num" style="background:var(--h1)">7</span>Late-Night Comedy</div>
+        <div class="chip"><span class="num" style="background:var(--h2)">8</span>True Crime</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div>© 2026 Norma Personal TV</div>
+    <div>Videos play through their creators' platforms. Norma Personal TV is not affiliated with YouTube or Amazon.</div>
+  </footer>
+</div>
+</body>
+</html>
